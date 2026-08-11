@@ -1,0 +1,9 @@
+{
+  "name": "Mein Essensplaner",
+  "short_name": "Essensplan",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f6f2e8",
+  "theme_color": "#f6f2e8",
+  "icons": []
+}

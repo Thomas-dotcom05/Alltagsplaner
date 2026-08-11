@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f6f2e8">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Mein Essensplaner</title>
+<style>
+:root{--bg:#f6f2e8;--card:#fffdfa;--ink:#1f2923;--muted:#778078;--line:#e7e0d4;--accent:#2f4936;--yellow:#f2d48b;--green:#c9dfc1;--blue:#cfdcf0;}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.app{max-width:760px;margin:auto;padding:18px 16px 96px} h1{font-size:31px;margin:8px 0 4px;letter-spacing:-1px} .sub{color:var(--muted);font-size:14px}
+.tabs{position:sticky;top:0;z-index:10;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px 0;background:rgba(246,242,232,.94);backdrop-filter:blur(14px)}
+.tab{border:0;border-radius:15px;padding:12px;background:#ebe5da;font-weight:800;color:#536057} .tab.active{background:var(--accent);color:white}
+.view{display:none} .view.active{display:block}
+.day,.recipe,.shop{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:15px;margin:12px 0;box-shadow:0 8px 25px rgba(38,44,39,.05)}
+.day h3{margin:0 0 10px;font-size:18px} .meal{margin:8px 0} .meal label{display:block;color:var(--muted);font-size:11px;font-weight:800;text-transform:uppercase;margin:0 0 5px 2px}
+select{width:100%;padding:13px 12px;border:1px solid var(--line);border-radius:14px;background:white;font-size:15px;color:var(--ink)}
+.shop-item{display:flex;gap:12px;align-items:center;padding:13px 2px;border-bottom:1px solid #eee7dc} .shop-item:last-child{border:0}
+.shop-item input{width:23px;height:23px;accent-color:#738e6d} .shop-name{font-weight:800} .shop-qty{color:var(--muted);font-size:13px;margin-top:2px} .done{opacity:.45;text-decoration:line-through}
+.recipe-top{display:flex;gap:12px;align-items:center} .emoji{width:58px;height:58px;border-radius:17px;display:grid;place-items:center;background:#f1ede5;font-size:31px}
+.recipe h3{margin:0;font-size:18px} .meta{font-size:12px;color:var(--muted);margin-top:4px} .details{display:none;border-top:1px solid var(--line);margin-top:12px;padding-top:12px} .details.open{display:block}
+.recipe button,.action{width:100%;border:0;border-radius:14px;padding:11px;background:#ece7de;font-weight:800;color:var(--ink);margin-top:10px}
+.badge{display:inline-block;border-radius:999px;padding:5px 8px;font-size:11px;font-weight:800;margin-bottom:4px} .fr{background:var(--yellow)} .mi{background:var(--green)} .ab{background:var(--blue)}
+.empty{padding:28px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:20px;background:var(--card)}
+footer{color:var(--muted);font-size:12px;text-align:center;margin-top:20px}
+</style>
+</head>
+<body>
+<div class="app">
+<h1>Mein Essensplan 🍽️</h1>
+<div class="sub">Gerichte wählen → Einkaufsliste entsteht automatisch.</div>
+<div class="tabs">
+<button class="tab active" data-v="week">Woche</button>
+<button class="tab" data-v="shop">Einkauf</button>
+<button class="tab" data-v="recipes">Rezepte</button>
+</div>
+<section id="week" class="view active"><div id="days"></div><button class="action" id="reset">Woche leeren</button></section>
+<section id="shop" class="view"><div id="shopping"></div></section>
+<section id="recipes" class="view"><div id="recipeGrid"></div></section>
+<footer>Auswahl und Häkchen werden auf diesem Gerät gespeichert.</footer>
+</div>
+<script>
+const RECIPES={"Power-Oats": {"category": "Frühstück", "time": "5 Min", "kcal": 700, "protein": "35 g", "emoji": "🥣", "ingredients": {"Haferflocken": [80, "g"], "Milch": [250, "ml"], "Skyr": [200, "g"], "Banane": [1, "Stück"], "Erdnussmus": [20, "g"], "TK-Beeren": [50, "g"]}, "steps": ["Haferflocken und Milch in eine Schüssel geben.", "Skyr, Banane, Erdnussmus und Beeren dazugeben.", "Alles gut umrühren. Fertig."]}, "Ei-Käse-Brote": {"category": "Frühstück", "time": "10 Min", "kcal": 700, "protein": "35 g", "emoji": "🍳", "ingredients": {"Eier": [3, "Stück"], "Vollkornbrot": [3, "Scheiben"], "Käse": [30, "g"], "Tomate/Gurke": [1, "Portion"], "Obst": [1, "Stück"]}, "steps": ["Eier verquirlen und würzen.", "In der Pfanne braten und Käse kurz darauf schmelzen lassen.", "Mit Brot, Gemüse und Obst essen."]}, "Frühstücks-Shake": {"category": "Frühstück", "time": "3 Min", "kcal": 750, "protein": "35–40 g", "emoji": "🥤", "ingredients": {"Milch": [400, "ml"], "Haferflocken": [80, "g"], "Banane": [1, "Stück"], "Skyr": [200, "g"], "Erdnussmus": [20, "g"]}, "steps": ["Alle Zutaten in den Mixer geben.", "30–60 Sekunden cremig mixen.", "In ein großes Glas oder eine Flasche füllen."]}, "Hähnchen-Reis-Bowl": {"category": "Mittag", "time": "20 Min", "kcal": 800, "protein": "50 g", "emoji": "🍗", "ingredients": {"Hähnchenbrust": [170, "g"], "Reis": [100, "g"], "TK-Gemüse": [200, "g"], "Olivenöl": [15, "ml"], "Sojasauce": [20, "ml"]}, "steps": ["Reis nach Packungsanleitung kochen.", "Hähnchen klein schneiden und vollständig durchbraten.", "Gemüse und Sauce dazugeben und mit dem Reis mischen."]}, "Hackfleisch-Pasta": {"category": "Mittag", "time": "20 Min", "kcal": 850, "protein": "45 g", "emoji": "🍝", "ingredients": {"Nudeln": [120, "g"], "Mageres Hackfleisch": [150, "g"], "Passierte Tomaten": [200, "ml"], "Käse": [30, "g"], "Gemüse": [1, "Portion"]}, "steps": ["Nudeln kochen.", "Hackfleisch vollständig anbraten und Tomaten dazugeben.", "Nudeln untermischen und Käse darübergeben."]}, "Chicken-Wraps": {"category": "Mittag", "time": "15 Min", "kcal": 800, "protein": "45 g", "emoji": "🌯", "ingredients": {"Wraps": [2, "Stück"], "Hähnchenbrust": [150, "g"], "Reis": [50, "g"], "Käse": [30, "g"], "Salat/Tomate/Gurke": [1, "Portion"], "Joghurt-Sauce": [50, "g"]}, "steps": ["Hähnchen würzen und vollständig durchbraten.", "Wraps mit allen Zutaten belegen.", "Seiten einklappen, fest einrollen und essen oder mitnehmen."]}, "Bauern-Omelett": {"category": "Abend", "time": "15 Min", "kcal": 700, "protein": "35–40 g", "emoji": "🥔", "ingredients": {"Eier": [3, "Stück"], "Kartoffeln": [250, "g"], "Käse": [40, "g"], "Gemüse": [1, "Portion"], "Olivenöl": [5, "ml"]}, "steps": ["Kartoffeln klein würfeln und gar braten.", "Gemüse kurz mitbraten.", "Eier darübergeben, Käse drauf und stocken lassen."]}, "Thunfisch-Pasta": {"category": "Abend", "time": "12 Min", "kcal": 750, "protein": "45 g", "emoji": "🥗", "ingredients": {"Nudeln": [100, "g"], "Thunfisch": [1, "Dose"], "Mais": [0.5, "Dose"], "Tomate/Gurke": [1, "Portion"], "Joghurt": [50, "g"], "Olivenöl": [15, "ml"]}, "steps": ["Nudeln kochen und abgießen.", "Thunfisch, Mais und Gemüse dazugeben.", "Joghurt und Öl untermischen, würzen und genießen."]}, "Hähnchen-Quesadillas": {"category": "Abend", "time": "10 Min", "kcal": 780, "protein": "45 g", "emoji": "🫓", "ingredients": {"Wraps": [2, "Stück"], "Hähnchenbrust": [150, "g"], "Käse": [50, "g"], "Paprika": [0.5, "Stück"], "Joghurt-Dip": [50, "g"]}, "steps": ["Hähnchen klein schneiden und vollständig durchbraten.", "Wrap mit Hähnchen, Käse und Paprika belegen und zuklappen.", "In der Pfanne beidseitig goldbraun braten."]}};
+const DAYS=["Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag","Sonntag"];
+const TYPES=[["Frühstück","Frühstück"],["Mittag","Mittag"],["Abend","Abend"]];
+let plan=JSON.parse(localStorage.getItem("thomasPlan")||"{}");
+let checked=JSON.parse(localStorage.getItem("thomasChecked")||"{}");
+const save=()=>localStorage.setItem("thomasPlan",JSON.stringify(plan));
+function opts(cat){return ["Auswärts / frei",...Object.entries(RECIPES).filter(([n,r])=>r.category===cat).map(([n])=>n)]}
+function renderWeek(){
+ const root=document.getElementById("days");root.innerHTML="";
+ DAYS.forEach(day=>{plan[day]??={};const d=document.createElement("div");d.className="day";d.innerHTML=`<h3>${day}</h3>`;
+ TYPES.forEach(([key,cat])=>{const m=document.createElement("div");m.className="meal";m.innerHTML=`<label>${key}</label>`;const s=document.createElement("select");
+ opts(cat).forEach(n=>{const o=document.createElement("option");o.value=n;o.textContent=n;if((plan[day][key]||"Auswärts / frei")===n)o.selected=true;s.appendChild(o)});
+ s.onchange=()=>{plan[day][key]=s.value;save();renderShop()};m.appendChild(s);d.appendChild(m)});
+ root.appendChild(d)});save()
+}
+function aggregate(){
+ const a={};Object.values(plan).forEach(d=>Object.values(d).forEach(n=>{if(!RECIPES[n])return;Object.entries(RECIPES[n].ingredients).forEach(([item,[qty,unit]])=>{const k=item+"|"+unit;a[k]??={name:item,unit,qty:0};a[k].qty+=qty})}));
+ return Object.values(a).sort((x,y)=>x.name.localeCompare(y.name,"de"))
+}
+function fmt(q,u){if((u==="g"||u==="ml")&&q>=1000)return (q/1000).toLocaleString("de-DE",{maximumFractionDigits:2})+" "+(u==="g"?"kg":"l");return q.toLocaleString("de-DE",{maximumFractionDigits:2})+" "+u}
+function renderShop(){
+ const root=document.getElementById("shopping"),items=aggregate();if(!items.length){root.innerHTML='<div class="empty">Wähle zuerst deine Gerichte für die Woche aus.</div>';return}
+ const box=document.createElement("div");box.className="shop";items.forEach(it=>{const k=it.name+"|"+it.unit;const row=document.createElement("label");row.className="shop-item"+(checked[k]?" done":"");
+ row.innerHTML=`<input type="checkbox" ${checked[k]?"checked":""}><div><div class="shop-name">${it.name}</div><div class="shop-qty">${fmt(it.qty,it.unit)}</div></div>`;
+ row.querySelector("input").onchange=e=>{checked[k]=e.target.checked;localStorage.setItem("thomasChecked",JSON.stringify(checked));row.classList.toggle("done",e.target.checked)};box.appendChild(row)});root.innerHTML="";root.appendChild(box)
+}
+function renderRecipes(){
+ const root=document.getElementById("recipeGrid");Object.entries(RECIPES).forEach(([n,r])=>{const cls=r.category==="Frühstück"?"fr":r.category==="Mittag"?"mi":"ab";const card=document.createElement("div");card.className="recipe";
+ card.innerHTML=`<div class="recipe-top"><div class="emoji">${r.emoji}</div><div><span class="badge ${cls}">${r.category}</span><h3>${n}</h3><div class="meta">${r.time} · ca. ${r.kcal} kcal · ${r.protein}</div></div></div><button>Rezept anzeigen</button><div class="details"><b>Zutaten</b><ul>${Object.entries(r.ingredients).map(([i,[q,u]])=>`<li>${q} ${u} ${i}</li>`).join("")}</ul><b>So geht's</b><ol>${r.steps.map(s=>`<li>${s}</li>`).join("")}</ol></div>`;
+ const btn=card.querySelector("button"),det=card.querySelector(".details");btn.onclick=()=>{det.classList.toggle("open");btn.textContent=det.classList.contains("open")?"Zuklappen":"Rezept anzeigen"};root.appendChild(card)})
+}
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.getElementById(b.dataset.v).classList.add("active");if(b.dataset.v==="shop")renderShop()});
+document.getElementById("reset").onclick=()=>{plan={};checked={};localStorage.clear();renderWeek();renderShop()};
+renderWeek();renderShop();renderRecipes();
+if("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js");
+</script>
+</body></html>
