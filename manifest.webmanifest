@@ -1,6 +1,6 @@
 {
-  "name": "Mein Essensplaner",
-  "short_name": "Essensplan",
+  "name": "Alltagsplaner",
+  "short_name": "Alltag",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f6f2e8",

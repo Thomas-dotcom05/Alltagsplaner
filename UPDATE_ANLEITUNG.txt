@@ -1,0 +1,22 @@
+ALLTAGSPLANER V2 – UPDATE AUF GITHUB
+
+Im Repository Alltagsplaner:
+1. Add file / Upload files.
+2. Diese 3 Dateien hochladen:
+   - index.html
+   - manifest.webmanifest
+   - sw.js
+3. GitHub fragt, ob vorhandene Dateien ersetzt werden sollen bzw. zeigt die Änderungen.
+4. Commit changes bestätigen.
+5. GitHub Pages aktualisiert die App automatisch.
+
+NEU IN V2:
+- 'Heute' als Startseite
+- aktuelles Datum + Begrüßung
+- Tagesfortschritt
+- täglicher Start: Aufstehen, Fitness, Dusche/Frühstück, Abendroutine
+- feste Termine automatisch je Wochentag
+- ausgewählte Mahlzeiten des Tages
+- Mahlzeiten abhaken
+- spontane Tagesaufgaben hinzufügen
+- Tageshäkchen werden pro Datum separat gespeichert
