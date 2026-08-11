@@ -1,0 +1,26 @@
+ALLTAGSPLANER V3
+
+Auf GitHub in deinem Repository Alltagsplaner:
+1. Add file → Upload files
+2. index.html, manifest.webmanifest und sw.js aus diesem Ordner hochladen.
+3. Commit changes.
+4. GitHub Pages aktualisiert automatisch.
+
+Neu:
+- Morgenroutine + 3 private Dankbarkeitsfelder
+- Abendroutine + privater Tagesabschluss
+- Gassi morgens und vor Kanzleifahrten
+- Wochenreport
+- Wochenziele: Ziele der letzten Woche abhaken / übernehmen
+- Aktive Wochenziele auf Heute
+- Fitness-Wochenplan
+- Kraft-Trainingsmodus Übung für Übung
+- Gewicht + Sätze speichern
+- Fortschrittsdiagramm pro Übung
+- Laufprotokoll
+- Recovery-Tage
+- Kalender
+- Essen, Einkauf, Rezepte bleiben erhalten
+
+WICHTIG:
+Persönliche Eingaben werden aktuell nur lokal im Browser gespeichert.
