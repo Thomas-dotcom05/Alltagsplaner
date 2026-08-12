@@ -22,6 +22,39 @@
 .shop-item{display:flex;gap:11px;align-items:center;padding:11px 0;border-bottom:1px solid #eee8dd}.shop-item:last-child{border:0}.shop-item input{width:22px;height:22px;accent-color:#78946f}.qty{font-size:12px;color:var(--muted)}
 .recipe{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px;margin:9px 0}.recipe button{width:100%;margin-top:9px}.details{display:none;border-top:1px solid var(--line);margin-top:11px;padding-top:11px}.details.open{display:block}.empty{padding:22px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:18px;background:var(--card)}.pill{display:inline-block;background:var(--soft);padding:5px 8px;border-radius:99px;font-size:11px;font-weight:800}
 .calendar-day{border-left:4px solid var(--accent);padding-left:10px;margin:12px 0}.calendar-day h3{margin:0 0 6px}.small{font-size:12px}footer{font-size:11px;color:var(--muted);text-align:center;margin-top:22px}
+
+/* V4 – app-like redesign */
+body{background:#f4f0e8}
+.app{max-width:760px;padding:18px 16px 105px}
+header{display:none}
+.tabs{position:fixed;left:50%;bottom:0;top:auto;transform:translateX(-50%);width:min(760px,100%);z-index:50;
+background:rgba(255,253,249,.96);border-top:1px solid var(--line);padding:8px 10px calc(8px + env(safe-area-inset-bottom));
+display:grid;grid-template-columns:repeat(5,1fr);gap:3px;box-shadow:0 -8px 30px rgba(40,46,41,.08)}
+.tab{background:transparent;padding:8px 2px;border-radius:13px;font-size:11px;display:flex;flex-direction:column;gap:3px;align-items:center;color:#788078}
+.tab:before{font-size:20px;line-height:20px}.tab.active{background:#e7ede5;color:#304a37}
+.tab[data-v="today"]:before{content:"⌂"}.tab[data-v="calendar"]:before{content:"▣"}.tab[data-v="fitness"]:before{content:"●"}.tab[data-v="week"]:before{content:"◉"}
+.tab[data-v="report"],.tab[data-v="shop"],.tab[data-v="recipes"]{display:none}
+.tab[data-v="today"]{order:1}.tab[data-v="calendar"]{order:2}.tab[data-v="fitness"]{order:3}.tab[data-v="week"]{order:4}
+.tabs:after{content:"•••\A Mehr";white-space:pre;order:5;font-weight:800;font-size:11px;text-align:center;line-height:18px;padding:4px;color:#788078}
+.hero{background:linear-gradient(145deg,#fffdfa,#ece6d9);padding:22px;border-radius:27px;box-shadow:0 10px 28px rgba(48,74,55,.06)}
+.hero .big{font-size:30px}.section{font-size:19px;margin-top:23px}
+.card{border-radius:23px;padding:16px;box-shadow:0 8px 24px rgba(40,46,41,.035)}
+.v4-status{display:flex;justify-content:space-between;align-items:center;margin-top:13px;padding-top:12px;border-top:1px solid #e8e1d6}
+.v4-status b{font-size:13px}.v4-timeline{position:relative;padding-left:30px}
+.v4-timeline:before{content:"";position:absolute;left:10px;top:10px;bottom:10px;width:2px;background:#ddd8cf}
+.timeline-item{position:relative;padding:10px 8px 12px;border-bottom:1px solid #eee9e0}
+.timeline-item:last-child{border-bottom:0}.timeline-item:before{content:"";position:absolute;left:-25px;top:17px;width:10px;height:10px;border-radius:50%;background:#9cac9e;border:3px solid #fff}
+.timeline-item.past{opacity:.46}.timeline-item.past-open{opacity:.58}.timeline-item.past-open:after{content:"Noch offen";display:inline-block;margin-top:5px;font-size:10px;font-weight:900;color:#b4473d;background:#fae5e2;padding:3px 7px;border-radius:99px}
+.now-line{position:relative;margin:7px 0 7px -30px;padding-left:30px;color:#304a37;font-size:11px;font-weight:900}
+.now-line:before{content:"";position:absolute;left:0;right:0;top:50%;height:2px;background:#6f8b74;z-index:0}.now-line span{position:relative;background:#f4f0e8;padding:3px 8px;border-radius:99px;z-index:1}
+.timeline-time{font-size:11px;font-weight:900;color:#7d867e}.timeline-title{font-weight:850;margin-top:2px}
+.v4-sport{background:linear-gradient(145deg,#e9efe7,#fffdfa);border:1px solid #dce5da}.v4-sport-top{display:flex;align-items:center;gap:13px}.v4-sport-icon{font-size:35px;background:#fff;border-radius:17px;width:60px;height:60px;display:grid;place-items:center}
+.v4-goals{display:grid;gap:8px}.v4-goal{padding:11px 12px;border-radius:15px;background:#f0ece4;font-weight:750;font-size:13px}
+.v4-meals{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.v4-meal{background:#f1ede5;border-radius:18px;padding:11px;text-align:center;min-height:100px}.v4-meal .em{font-size:28px}.v4-meal b{font-size:11px;display:block;margin-top:5px}.v4-meal small{color:#7c847e;font-size:9px}
+.more-sheet{position:fixed;inset:auto 12px calc(75px + env(safe-area-inset-bottom)) 12px;background:#fffdfa;border:1px solid var(--line);border-radius:24px;padding:12px;z-index:70;box-shadow:0 15px 45px rgba(0,0,0,.15);display:none}
+.more-sheet.open{display:block}.more-sheet button{width:100%;text-align:left;border:0;background:transparent;padding:14px;border-bottom:1px solid #eee8dd;font-weight:800}.more-sheet button:last-child{border-bottom:0}
+#today .section.old-hide,#today>.card.old-hide{display:none}
+
 </style></head>
 <body><div class="app">
 <header><h1>Alltagsplaner <span class="small">V3</span></h1><div class="sub">Funktionen zuerst. Optik später.</div></header>
@@ -31,6 +64,18 @@
 
 <section id="today" class="view active">
 <div class="hero"><div id="todayDate" class="muted"></div><div class="big" id="greet">Guten Morgen 👋</div><div id="progressText" class="muted"></div><div class="progress"><div id="progressBar"></div></div></div>
+
+<div id="v4Dashboard">
+  <div class="v4-status"><b id="v4PlanStatus">Tagesstatus</b><span class="pill" id="v4OpenCount">0 offen</span></div>
+  <div class="section">🕒 Dein Tag</div>
+  <div class="card v4-timeline" id="v4Timeline"></div>
+  <div class="section">🏃‍♂️ Sport heute</div>
+  <div class="card v4-sport" id="v4SportCard"></div>
+  <div class="section">🎯 Wochenziele</div>
+  <div class="card v4-goals" id="v4GoalCards"></div>
+  <div class="section">🍽️ Essen heute</div>
+  <div class="card v4-meals" id="v4MealCards"></div>
+</div>
 <div class="section">🎯 Wochenziele</div><div class="card" id="todayGoals"></div>
 <div class="section">☀️ Morgenroutine</div><div class="card" id="morning"></div>
 <div class="section">📅 Heute fest</div><div class="card" id="todaySchedule"></div>
@@ -62,7 +107,11 @@
 <section id="week" class="view"><div class="section">🍽️ Essensplan</div><div id="days"></div><button class="btn soft" id="clearWeek">Essenswoche leeren</button></section>
 <section id="shop" class="view"><div class="section">🛒 Einkaufsliste</div><div id="shopping"></div></section>
 <section id="recipes" class="view"><div class="section">📖 Rezepte</div><div id="recipeGrid"></div></section>
-<footer>Persönliche Eingaben werden aktuell nur lokal im Browser dieses Geräts gespeichert.</footer>
+<div class="more-sheet" id="moreSheet">
+<button data-open="report">📊 Wochenreport</button>
+<button data-open="shop">🛒 Einkaufsliste</button>
+<button data-open="recipes">📖 Rezepte</button>
+</div><footer>Persönliche Eingaben werden aktuell nur lokal im Browser dieses Geräts gespeichert.</footer>
 </div>
 
 <script>
@@ -154,6 +203,65 @@ function renderRecipes(){recipeGrid.innerHTML="";Object.entries(RECIPES).forEach
 clearWeek.onclick=()=>{plan={};localStorage.removeItem("thomasPlan");renderWeek();renderShop();renderToday()};
 
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.getElementById(b.dataset.v).classList.add("active");if(b.dataset.v==="today")renderToday();if(b.dataset.v==="fitness")renderFitnessHome();if(b.dataset.v==="report")renderReport();if(b.dataset.v==="shop")renderShop()});
+
+function mins(t){let [h,m]=t.split(":").map(Number);return h*60+m}
+function v4Entries(){
+ let day=gDay(), s=daily(), arr=[
+  {time:"06:00",title:"Aufstehen",id:"wake"},
+  {time:"06:05",title:"Wasser + Dankbarkeit",id:"water"},
+  {time:"06:15",title:"Bad / fertig für draußen",id:"bath"},
+  {time:"06:25",title:"🐕 Morgengassi",id:"gassi"},
+  {time:"06:50",title:FITNESS[day].emoji+" "+FITNESS[day].name,id:"sport"},
+  {time:"07:35",title:"Duschen & anziehen",id:"shower"},
+  {time:"08:00",title:"Frühstück",id:"meal_Frühstück"}
+ ];
+ (FIXED[day]||[]).forEach((e,i)=>arr.push({time:e[0],title:e[2],id:"fixed_"+i,fixed:true}));
+ arr.push({time:"12:30",title:"Mittagessen",id:"meal_Mittag"});
+ arr.push({time:"18:30",title:"Abendessen",id:"meal_Abend"});
+ arr.push({time:"21:15",title:"🌙 Abendroutine",id:"tidy"});
+ arr.push({time:"22:00",title:"Schlafen",id:"sleep"});
+ return arr.sort((a,b)=>mins(a.time)-mins(b.time));
+}
+function renderV4(){
+ let now=new Date(), cur=now.getHours()*60+now.getMinutes(), s=daily(), entries=v4Entries(), linePlaced=false, openPast=0;
+ v4Timeline.innerHTML="";
+ entries.forEach((e)=>{
+   let tm=mins(e.time);
+   if(!linePlaced && cur<tm){let n=document.createElement("div");n.className="now-line";n.innerHTML=`<span>${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")} · JETZT</span>`;v4Timeline.appendChild(n);linePlaced=true}
+   let done=!!s.checks[e.id], past=cur>tm+15;
+   if(past&&!done&&!e.fixed)openPast++;
+   let x=document.createElement("div");x.className="timeline-item"+(past?(done||e.fixed?" past":" past-open"):"");
+   x.innerHTML=`<div class="timeline-time">${e.time}</div><div class="timeline-title">${done?"✓ ":""}${e.title}</div>`;
+   v4Timeline.appendChild(x);
+ });
+ if(!linePlaced){let n=document.createElement("div");n.className="now-line";n.innerHTML=`<span>${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")} · JETZT</span>`;v4Timeline.appendChild(n)}
+ v4OpenCount.textContent=openPast?openPast+" vergangen & offen":"Alles im Plan ✓";
+ v4PlanStatus.textContent=openPast?"Du hast noch offene Punkte":"Du bist gut in der Zeit";
+
+ let f=FITNESS[gDay()];v4SportCard.innerHTML=`<div class="v4-sport-top"><div class="v4-sport-icon">${f.emoji}</div><div><div class="small muted">HEUTE · MORGENBLOCK</div><h2 style="margin:2px 0">${f.name}</h2><div class="small muted">${f.type==="strength"?"45 Minuten":f.plan}</div></div></div><button class="btn" id="v4StartSport" style="width:100%;margin-top:12px">${s.checks.sport?"Erledigt ✓":"Training starten"}</button>`;
+ document.getElementById("v4StartSport").onclick=()=>{document.querySelector('.tab[data-v="fitness"]').click();if(!s.checks.sport)setTimeout(startFitnessMode,50)};
+
+ let goals=activeGoals();v4GoalCards.innerHTML=goals.length?goals.map((g,i)=>`<div class="v4-goal">${i+1}. ${g.text}</div>`).join(""):'<div class="empty">Noch keine Wochenziele gesetzt.</div>';
+ let tp=plan[gDay()]||{};v4MealCards.innerHTML=TYPES.map(([key])=>{let n=tp[key]||"Frei",r=RECIPES[n];return `<div class="v4-meal"><div class="em">${r?r.emoji:"🍽️"}</div><small>${key}</small><b>${n}</b></div>`}).join("");
+}
+const oldRenderToday=renderToday;renderToday=function(){oldRenderToday();renderV4()}
+setInterval(()=>{if(document.getElementById("today").classList.contains("active"))renderV4()},60000);
+
+const tabbar=document.querySelector(".tabs");
+tabbar.addEventListener("click",e=>{if(e.target===tabbar){moreSheet.classList.toggle("open")}});
+tabbar.addEventListener("pointerup",e=>{
+ let r=tabbar.getBoundingClientRect();
+ if(e.clientX>r.left+r.width*.8 && !e.target.classList.contains("tab")) moreSheet.classList.toggle("open");
+});
+document.querySelectorAll("#moreSheet button").forEach(b=>b.onclick=()=>{
+ moreSheet.classList.remove("open");
+ let id=b.dataset.open;document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");
+ if(id==="report")renderReport();if(id==="shop")renderShop();if(id==="recipes")renderRecipes();
+});
+
 renderToday();renderCalendar();renderFitnessHome();renderReport();renderWeek();renderShop();renderRecipes();
+
+// V4 keeps the original controls available below the dashboard while testing.
+// Bottom navigation has 5 primary destinations; extra tools live under "Mehr".
 if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js");
 </script></body></html>

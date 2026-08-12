@@ -1,26 +1,16 @@
-ALLTAGSPLANER V3
+ALLTAGSPLANER V4 – DESIGNTEST
 
-Auf GitHub in deinem Repository Alltagsplaner:
-1. Add file → Upload files
-2. index.html, manifest.webmanifest und sw.js aus diesem Ordner hochladen.
-3. Commit changes.
-4. GitHub Pages aktualisiert automatisch.
+Neu auf „Heute“:
+- app-artige Bottom-Navigation
+- vertikale Tages-Zeitlinie
+- automatische JETZT-Linie nach Uhrzeit
+- vergangene Punkte leicht grau
+- vergangene unerledigte Punkte mit rotem „Noch offen“
+- Tagesstatus („Alles im Plan“ / offene Punkte)
+- große Sportkarte
+- kompakte Wochenziele
+- visuelle Mahlzeitenkarten
+- bisherige V3-Funktionen und lokale Speicher-Schlüssel bleiben erhalten
 
-Neu:
-- Morgenroutine + 3 private Dankbarkeitsfelder
-- Abendroutine + privater Tagesabschluss
-- Gassi morgens und vor Kanzleifahrten
-- Wochenreport
-- Wochenziele: Ziele der letzten Woche abhaken / übernehmen
-- Aktive Wochenziele auf Heute
-- Fitness-Wochenplan
-- Kraft-Trainingsmodus Übung für Übung
-- Gewicht + Sätze speichern
-- Fortschrittsdiagramm pro Übung
-- Laufprotokoll
-- Recovery-Tage
-- Kalender
-- Essen, Einkauf, Rezepte bleiben erhalten
-
-WICHTIG:
-Persönliche Eingaben werden aktuell nur lokal im Browser gespeichert.
+Upload zu GitHub:
+index.html + manifest.webmanifest + sw.js ersetzen und committen.
